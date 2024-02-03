@@ -1,27 +1,25 @@
 import 'package:flutter/material.dart';
-
 import 'package:flutter_spotify_ui/data/data.dart';
-import 'package:flutter_spotify_ui/widgets/widgets.dart';
+import 'package:flutter_spotify_ui/presentation/playlist_view/components/playlist_header.dart';
+import 'package:flutter_spotify_ui/presentation/playlist_view/components/track_list.dart';
+import 'package:flutter_spotify_ui/widgets/custom_text.dart';
 
-class PlaylistScreen extends StatefulWidget {
+class PlaylistView extends StatefulWidget {
   final Playlist playlist;
 
-  const PlaylistScreen({
-    Key? key,
-    required this.playlist,
-  }) : super(key: key);
+  PlaylistView({required this.playlist});
 
   @override
-  _PlaylistScreenState createState() => _PlaylistScreenState();
+  State<PlaylistView> createState() => _PlaylistViewState();
 }
 
-class _PlaylistScreenState extends State<PlaylistScreen> {
+class _PlaylistViewState extends State<PlaylistView> {
   ScrollController? _scrollController;
 
   @override
   void initState() {
-    super.initState();
     _scrollController = ScrollController();
+    super.initState();
   }
 
   @override
@@ -37,35 +35,41 @@ class _PlaylistScreenState extends State<PlaylistScreen> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        leadingWidth: 140.0,
+        leadingWidth: 140,
         leading: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               InkWell(
-                customBorder: const CircleBorder(),
+                customBorder: CircleBorder(),
                 onTap: () {},
                 child: Container(
-                  padding: const EdgeInsets.all(6.0),
-                  decoration: const BoxDecoration(
+                  padding: EdgeInsets.all(6),
+                  decoration: BoxDecoration(
                     color: Colors.black26,
                     shape: BoxShape.circle,
                   ),
-                  child: const Icon(Icons.chevron_left, size: 28.0),
+                  child: Icon(
+                    Icons.chevron_left,
+                    size: 28,
+                  ),
                 ),
               ),
-              const SizedBox(width: 16.0),
+              SizedBox(width: 16),
               InkWell(
-                customBorder: const CircleBorder(),
+                customBorder: CircleBorder(),
                 onTap: () {},
                 child: Container(
-                  padding: const EdgeInsets.all(6.0),
-                  decoration: const BoxDecoration(
+                  padding: EdgeInsets.all(6),
+                  decoration: BoxDecoration(
                     color: Colors.black26,
                     shape: BoxShape.circle,
                   ),
-                  child: const Icon(Icons.chevron_right, size: 28.0),
+                  child: Icon(
+                    Icons.chevron_right,
+                    size: 28,
+                  ),
                 ),
               ),
             ],
@@ -74,49 +78,51 @@ class _PlaylistScreenState extends State<PlaylistScreen> {
         actions: [
           TextButton.icon(
             style: TextButton.styleFrom(
-              primary: Theme.of(context).iconTheme.color,
+              primary: Colors.white,
             ),
             onPressed: () {},
-            icon: const Icon(
+            icon: Icon(
               Icons.account_circle_outlined,
-              size: 30.0,
+              size: 30,
             ),
-            label: const Text('Marcus Ng'),
+            label: CustomText(
+              text: 'Abid Ullah',
+            ),
           ),
-          const SizedBox(width: 8.0),
+          SizedBox(width: 8),
           IconButton(
-            padding: const EdgeInsets.only(),
-            icon: const Icon(Icons.keyboard_arrow_down, size: 30.0),
+            padding: EdgeInsets.zero,
             onPressed: () {},
+            icon: Icon(
+              Icons.keyboard_arrow_down,
+              size: 30,
+            ),
           ),
-          const SizedBox(width: 20.0),
+          SizedBox(width: 20),
         ],
       ),
       body: Container(
-        width: double.infinity,
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              const Color(0xFFAF1018),
-              Theme.of(context).backgroundColor,
+              Color(0xffAF1018),
+              Colors.black,
             ],
-            stops: const [0, 0.3],
+            stops: [0, 0.3],
           ),
         ),
         child: Scrollbar(
-          isAlwaysShown: true,
           controller: _scrollController,
+          trackVisibility: true,
           child: ListView(
             controller: _scrollController,
-            padding: const EdgeInsets.symmetric(
-              horizontal: 20.0,
-              vertical: 60.0,
-            ),
             children: [
               PlaylistHeader(playlist: widget.playlist),
-              TracksList(tracks: widget.playlist.songs),
+
+              ///this is the list of songs
+              TrackList(tracks: widget.playlist.songs),
             ],
           ),
         ),
